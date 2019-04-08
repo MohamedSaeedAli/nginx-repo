@@ -1,7 +1,9 @@
 FROM nginx:alpine
 COPY ./nginx.conf /etc/nginx/nginx.conf
-RUN chown -R $userid:root /var/cache/nginx
-ARG userid
+RUN touch /var/run/nginx.pid && \
+  chown -R $userid:root /var/run/nginx.pid && \
+  chown -R $userid:root /var/cache/nginx
+ARG $userid 
 USER $userid
-ENTRYPOINT nginx
+CMD ["nginx"]
 
